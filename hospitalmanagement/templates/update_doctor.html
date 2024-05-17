@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasta Kaydı Güncelle</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Doktor Kaydı Güncelle</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="DoktorID">Doktor ID:</label>
+                <input type="text" class="form-control" id="DoktorID" name="DoktorID">
+            </div>
+            <div class="form-group">
+                <label for="Ad">Ad:</label>
+                <input type="text" class="form-control" id="Ad" name="Ad">
+            </div>
+            <div class="form-group">
+                <label for="Soyad">Soyad:</label>
+                <input type="text" class="form-control" id="Soyad" name="Soyad">
+            </div>
+           
+            <div class="form-group">
+                <label for="UzmanlikAlani">Uzmanlık Alanı:</label>
+                <input type="text" class="form-control" id="UzmanlikAlani" name="UzmanlikAlani">
+            </div>
+            <div class="form-group">
+                <label for="CalistigiHastane">Çalıştığı Hastane:</label>
+                <textarea class="form-control" id="CalistigiHastane" name="CalistigiHastane"></textarea>
+            </div>
+            <button type="submit" class="btn btn-info btn-block">Güncelle</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

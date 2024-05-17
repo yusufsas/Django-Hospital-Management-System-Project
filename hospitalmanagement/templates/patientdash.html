@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{hasta.Ad}}</h1>
+
+    <div class="container">
+        <h2 class="text-center">Randevu Oluştur</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {%for doktor in doktorlar%}
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="{{doktor.id}}" name="doktor[]" value="{{doktor.id}}">
+                  <label class="form-check-label" for="{{doktor.id}}">{{doktor.Ad}}-{{doktor.UzmanlikAlani}}</label>
+                </div>
+                {%endfor%}
+               
+              </div>
+            <div class="form-group">
+                <label for="RandevuTarihi">Randevu Tarihi:</label>
+                <input type="date" class="form-control" id="RandevuTarihi" name="RandevuTarihi">
+            </div>
+            <div class="form-group">
+            <label for="timeInput">Bir saat seçin:</label>
+            <input type="time" id="timeInput" name="RandevuSaati">
+             </div>
+            <button type="submit" class="btn btn-info btn-block">Randevu Al</button>
+        </form>
+    </div>
+
+
+    
+    
+        
+        
+  
+        <div class="text-center mb-4">
+            <h1>Randevular</h1>
+        </div>
+        <div class="row">
+            {% for randevu in randevular %}
+<div class="col-md-6 col-lg-4 mb-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Tarih: {{ randevu.RandevuTarihi }}</h5>
+            <p class="card-text">
+                <strong>Saat:</strong> {{ randevu.RandevuSaati }}<br>
+                <strong>Doktor:</strong> {{ randevu.Doktor.Ad }}<br>
+                <strong>Hasta:</strong> {{ randevu.Hasta.Ad }}
+            </p>
+            <form method="post" action="{% url 'randevu_guncelle' randevu.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning btn-sm">GÜNCELLE</button>
+            </form>
+            <form method="post" action="{% url 'randevu_sil' randevu.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm mt-2">İPTAL</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+        </div>
+    
+        
+        
+  
+
+    <div>Sonuclar</div>
+
+    <div class="container">
+        <a href="{%url 'update_patient'%}" class="btn btn-info">Hasta Verileri Güncelle</a>
+    </div>
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

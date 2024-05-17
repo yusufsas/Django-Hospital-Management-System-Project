@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasta Kaydı Güncelle</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container my-5">
+        <h2 class="text-center">Hasta Kaydı Güncelle</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="HastaID">Hasta ID:</label>
+                <input type="text" class="form-control" id="HastaID" name="HastaID">
+            </div>
+            <div class="form-group">
+                <label for="Ad">Ad:</label>
+                <input type="text" class="form-control" id="Ad" name="Ad">
+            </div>
+            <div class="form-group">
+                <label for="Soyad">Soyad:</label>
+                <input type="text" class="form-control" id="Soyad" name="Soyad">
+            </div>
+            <div class="form-group">
+                <label for="DogumTarihi">Doğum Tarihi:</label>
+                <input type="date" class="form-control" id="DogumTarihi" name="DogumTarihi">
+            </div>
+            <div class="form-group">
+                <label for="Cinsiyet">Cinsiyet:</label>
+                <input type="text" class="form-control" id="Cinsiyet" name="Cinsiyet">
+            </div>
+            <div class="form-group">
+                <label for="TelefonNumarasi">Telefon Numarası:</label>
+                <input type="text" class="form-control" id="TelefonNumarasi" name="TelefonNumarasi">
+            </div>
+            <div class="form-group">
+                <label for="Adres">Adres:</label>
+                <textarea class="form-control" id="Adres" name="Adres"></textarea>
+            </div>
+            <button type="submit" class="btn btn-info btn-block">Güncelle</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
