@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Custom CSS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
             padding: 20px;
@@ -46,7 +47,7 @@
             <label for="timeInput">Bir saat seçin:</label>
             <input type="time" id="timeInput" name="RandevuSaati">
              </div>
-            <button type="submit" class="btn btn-info btn-block">Randevu Al</button>
+            <button type="submit" class="btn btn-info btn-block" name="form1_submit">Randevu Al</button>
         </form>
     </div>
 
@@ -83,16 +84,150 @@
 </div>
 {% endfor %}
         </div>
+
+        <div class="container">
+            <h2 class="text-center">Rapor Oluştur</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    {%for doktor in doktorlar%}
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" id="{{doktor.id}}" name="doktor[]" value="{{doktor.id}}">
+                      <label class="form-check-label" for="{{doktor.id}}">{{doktor.Ad}}-{{doktor.UzmanlikAlani}}</label>
+                    </div>
+                    {%endfor%}
+                   
+                  </div>
+                <div class="form-group">
+                    <label for="RaporTarihi">Rapor Tarihi:</label>
+                    <input type="date" class="form-control" id="RandevuTarihi" name="tarih">
+                </div>
+                <div class="form-group my-1">
+                    <label for="id_profile_image">Rapor Resmi Yükle:</label>
+                    <input type="file" name="reportimg" id="id_profile_image">
+                </div>
+                <div class="form-group">
+                    <label for="RaporTarihi">İçerik:</label>
+                    <input type="text" class="form-control" id="RandevuTarihi" name="içerik">
+                </div>
+                
+                <button type="submit" class="btn btn-info btn-block" name="form2_submit">Tibbi Rapor Ekle</button>
+            </form>
+        </div>
     
         
         
   
 
-    <div>Sonuclar</div>
+        <div class="text-center mb-4">
+            <h1>Raporlar</h1>
+        </div>
+        
+        <div class="row">
+            {% for rapor in raporlar %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Tarih: {{ rapor.RaporTarihi }}</h5>
+                        <p class="card-text">
+                            <strong>Text:</strong> {{ rapor.RaporIcerigi }}<br>
+                            <strong>Doktor:</strong> {{ rapor.Doktor.Ad }}<br>
+                            <strong>Hasta:</strong> {{ rapor.Hasta.Ad }}
+                        </p>
+                        <div class="img">
+                            {% if rapor.RaporImage %}
+                            <img src="{{ rapor.RaporImage.url }}" alt="Profile Image" class="object-fit-md-cover" style="width: 350px; height: 350px;">
+                            {% else %}
+                            <p>No profile image available.</p>
+                            {% endif %}
+                        </div>
+                        <div class="mt-3">
+                            <a href="{% url 'rapor_sil' rapor.id %}" class="btn btn-danger">Sil</a>
+                            <a href="{% url 'rapor_guncelle' rapor.id %}" class="btn btn-primary">Güncelle</a>
+                            <a href="{% url 'rapor_indir' rapor.id %}" class="btn btn-success">İndir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        
+
 
     <div class="container">
         <a href="{%url 'update_patient'%}" class="btn btn-info">Hasta Verileri Güncelle</a>
     </div>
+
+
+   
+    
+    <script>
+        $(document).ready(function () {
+            $('#raporEkle').click(function () {
+                var formData = new FormData();
+                var doktorlar = [];
+                $('.doktor-checkbox:checked').each(function () {
+                    doktorlar.push($(this).val());
+                });
+                formData.append('doktorlar', JSON.stringify(doktorlar));
+                formData.append('tarih', $('#raporTarihi').val());
+                formData.append('raporResmi', $('#raporResmi')[0].files[0]);
+                formData.append('icerik', $('#raporIcerik').val());
+    
+                $.ajax({
+                    url: '{% url "rapor_yukle" %}',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    success: function (data) {
+                        if (data.status === 'success') {
+                            alert('Rapor başarıyla yüklendi');
+                            location.reload();
+                        } else {
+                            alert('Rapor yüklenirken bir hata oluştu');
+                        }
+                    },
+                    error: function () {
+                        alert('Rapor yüklenirken bir hata oluştu');
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        function uploadRapor() {
+            var formData = new FormData();
+            formData.append('file', $('#file')[0].files[0]);
+            formData.append('image', $('#image')[0].files[0]);
+    
+            $.ajax({
+                url: '{% url "rapor_yukle" %}',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    if (data.status === 'success') {
+                        alert('Rapor başarıyla yüklendi');
+                        location.reload();
+                    } else {
+                        alert('Rapor yüklenirken bir hata oluştu');
+                    }
+                },
+                error: function() {
+                    alert('Rapor yüklenirken bir hata oluştu');
+                }
+            });
+        }
+    </script>
 
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

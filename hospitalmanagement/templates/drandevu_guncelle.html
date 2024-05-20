@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevu Güncelle</title>
+</head>
+<body>
+    <h1>Randevu Güncelle</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="randevu_tarihi">Tarih:</label>
+            <input type="date" class="form-control" id="randevu_tarihi" name="randevu_tarihi" value="{{ randevu.RandevuTarihi|date:'Y-m-d' }}" required>
+        </div><label for="randevu_saati">Saat:</label>
+        <input type="time" id="randevu_saati" name="randevu_saati" value="{{ randevu.RandevuSaati }}" required><br><br>
+        <button type="submit">Güncelle</button>
+    </form>
+</body>
+</html>

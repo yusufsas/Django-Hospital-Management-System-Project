@@ -1,7 +1,13 @@
 from django.db import models
 
-# Create your models here.
 
+# Create your models here.
+class AdminAcc(models.Model):
+    id=models.AutoField(primary_key=True)
+    Ad = models.CharField(max_length=100)
+    Soyad = models.CharField(max_length=100)
+    password=models.CharField(max_length=100)
+    
 class Hasta(models.Model):
     id=models.AutoField(primary_key=True)
     HastaID=models.CharField(max_length=100)
@@ -34,3 +40,4 @@ class TibbiRapor(models.Model):
     RaporImage=models.ImageField(upload_to="images",blank=True)
     Hasta = models.ForeignKey(Hasta, on_delete=models.CASCADE)
     Doktor = models.ForeignKey(Doktor, on_delete=models.CASCADE)
+

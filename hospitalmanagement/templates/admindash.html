@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+</head>
+<body>
+    <h1>admin panel</h1>
+    <div class="container">
+        <h2 class="text-center">Hasta Sil</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {%for hasta in hastalar%}
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="{{hasta.id}}" name="hastalar" value="{{hasta.id}}">
+                  <label class="form-check-label" for="{{hasta.id}}">{{hasta.Ad}}-{{hasta.Soyad}}</label>
+                </div>
+                {%endfor%}
+               
+              </div>
+           
+            <button type="submit" class="btn btn-info btn-block" name="form1_submit">Sil</button>
+        </form>
+    </div>
+    <div class="container">
+        <h2 class="text-center">Doktor Sil</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {%for doktor in doktorlar%}
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="{{doktor.id}}" name="doktorlar" value="{{doktor.id}}">
+                  <label class="form-check-label" for="{{doktor.id}}">{{doktor.Ad}}-{{doktor.Soyad}}</label>
+                </div>
+                {%endfor%}
+               
+              </div>
+           
+            <button type="submit" class="btn btn-info btn-block" name="form2_submit">Sil</button>
+        </form>
+    </div>
+
+       <!-- Bootstrap JS (optional) -->
+       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

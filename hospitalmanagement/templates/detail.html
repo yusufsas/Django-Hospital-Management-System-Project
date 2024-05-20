@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Patient Report</title>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h1 class="display-2">{{ doktor.Ad }} {{ doktor.Soyad }}</h1>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2>Patient Information</h2>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>ID:</strong> {{ hasta.HastaID }}</li>
+                <li class="list-group-item"><strong>Name:</strong> {{ hasta.Ad }}</li>
+                <li class="list-group-item"><strong>Surname:</strong> {{ hasta.Soyad }}</li>
+                <li class="list-group-item"><strong>Date of Birth:</strong> {{ hasta.DogumTarihi }}</li>
+                <li class="list-group-item"><strong>Gender:</strong> {{ hasta.Cinsiyet }}</li>
+                <li class="list-group-item"><strong>Phone Number:</strong> {{ hasta.TelefonNumarasi }}</li>
+                <li class="list-group-item"><strong>Address:</strong> {{ hasta.Adres }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="text-center mb-4">
+        <h1>Raporlar</h1>
+    </div>
+
+    <div class="text-center mb-4">
+        <h1>Raporlar</h1>
+    </div>
+    
+    <div class="row">
+        {% for rapor in raporlar %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Tarih: {{ rapor.RaporTarihi }}</h5>
+                    <p class="card-text">
+                        <strong>Text:</strong> {{ rapor.RaporIcerigi }}<br>
+                        <strong>Doktor:</strong> {{ rapor.Doktor.Ad }}<br>
+                        <strong>Hasta:</strong> {{ rapor.Hasta.Ad }}
+                    </p>
+                    <div class="img">
+                        {% if rapor.RaporImage %}
+                        <img src="{{ rapor.RaporImage.url }}" alt="Profile Image" class="object-fit-md-cover" style="width: 350px; height: 350px;">
+                        {% else %}
+                        <p>No profile image available.</p>
+                        {% endif %}
+                    </div>
+                    <div class="mt-3">
+                        <a href="{% url 'drapor_sil' rapor.id %}" class="btn btn-danger">Sil</a>
+                        <a href="{% url 'drapor_guncelle' rapor.id %}" class="btn btn-primary">Güncelle</a>
+                        <a href="{% url 'drapor_indir' rapor.id %}" class="btn btn-success">İndir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="row">
+    {% for randevu in randevular %}
+<div class="col-md-6 col-lg-4 mb-4">
+<div class="card">
+<div class="card-body">
+    <h5 class="card-title">Tarih: {{ randevu.RandevuTarihi }}</h5>
+    <p class="card-text">
+        <strong>Saat:</strong> {{ randevu.RandevuSaati }}<br>
+        <strong>Doktor:</strong> {{ randevu.Doktor.Ad }}<br>
+        <strong>Hasta:</strong> {{ randevu.Hasta.Ad }}
+    </p>
+    
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+       <!-- Bootstrap JS (optional) -->
+       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -8,12 +8,48 @@
     <!-- Custom CSS -->
 </head>
 <body>
+    <h1 class="display-2">{{doktor.Ad}} {{doktor.Soyad}}</h1>
+  
+   
+
+  
     <div class="container">
-        <a href="{%url 'update_doctor'%}" class="btn btn-info">Doktor Verileri Güncelle</a>
+        {%for hasta in hastalar%}
+            <a href="{%url 'detail' hasta.id %}">{{hasta.Ad}} {{hasta.Soyad}}</a>
+        {%endfor%}
     </div>
 
+    <h1>Randevular</h1>
+</div>
+<div class="row">
+    {% for randevu in randevular %}
+<div class="col-md-6 col-lg-4 mb-4">
+<div class="card">
+<div class="card-body">
+    <h5 class="card-title">Tarih: {{ randevu.RandevuTarihi }}</h5>
+    <p class="card-text">
+        <strong>Saat:</strong> {{ randevu.RandevuSaati }}<br>
+        <strong>Doktor:</strong> {{ randevu.Doktor.Ad }}<br>
+        <strong>Hasta:</strong> {{ randevu.Hasta.Ad }}
+    </p>
+    <form method="post" action="{% url 'drandevu_guncelle' randevu.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-warning btn-sm">GÜNCELLE</button>
+    </form>
+    <form method="post" action="{% url 'drandevu_sil' randevu.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-sm mt-2">İPTAL</button>
+    </form>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
 
-    <div>Hastalar</div>
+<div class="container">
+    <a href="{%url 'update_doctor'%}" class="btn btn-info">Doktor Verileri Güncelle</a>
+</div>
+
 
 
        <!-- Bootstrap JS (optional) -->
